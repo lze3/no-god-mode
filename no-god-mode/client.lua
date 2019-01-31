@@ -1,8 +1,9 @@
 Citizen.CreateThread(function()
 
-    local player_l = PlayerPedId()
-    local ped_l = PlayerId()
     while true do
+        
+        local player_l = PlayerPedId()
+        local ped_l = PlayerId()
 
         if GetPlayerInvincible(ped_l) then
             DrawLabel("~r~You are currently in godmode which is ~h~prohibited~h~ on this server, disable it now.")
