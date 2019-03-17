@@ -1,4 +1,5 @@
 local isInvincible = false
+local isAdmin = false
 
 Citizen.CreateThread(function()
     while true do
@@ -13,7 +14,7 @@ Citizen.CreateThread(function()
         
         local ped = PlayerPedId()
         local player = PlayerId()
-        if isInvincible then
+        if isInvincible and not isAdmin then
             DrawLabel("~r~You are currently in godmode which is ~h~prohibited~h~ on this server, disable it now.")
             FreezeEntityPosition(ped, true)
             DisablePlayerFiring(player, true) -- true/false - doesn't seem to do anything different, still disables every frame
@@ -36,3 +37,8 @@ function DrawLabel(text)
     AddTextComponentSubstringPlayerName(text)
     EndTextCommandDisplayHelp(0, 0, 1, -1)
 end
+
+RegisterNetEvent("sendAcePermissionToClient")
+AddEventHandler("sendAcePermissionToClient", function(state)
+    isAdmin = state
+end)
