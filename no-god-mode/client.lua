@@ -1,19 +1,22 @@
 local isInvincible = false
 local isAdmin = false
+local player = 0
+local ped = 0
 
 Citizen.CreateThread(function()
     while true do
-        isInvincible = GetPlayerInvincible(PlayerId())
-        isInVeh = IsPedInAnyVehicle(PlayerPedId(), false)
+        
+        player = PlayerId()
+        ped = PlayerPedId()
+        isInvincible = GetPlayerInvincible(player)
+        isInVeh = IsPedInAnyVehicle(ped, false)
         Citizen.Wait(500)
     end
 end)
 
 Citizen.CreateThread(function()
     while true do
-        
-        local ped = PlayerPedId()
-        local player = PlayerId()
+
         if isInvincible and not isAdmin then
             DrawLabel("~r~You are currently in godmode which is ~h~prohibited~h~ on this server, disable it now.")
             FreezeEntityPosition(ped, true)
