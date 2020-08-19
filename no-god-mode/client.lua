@@ -2,6 +2,7 @@ local isInvincible = false
 local isAdmin = false
 local player = 0
 local ped = 0
+local currentVehicle = 0
 
 Citizen.CreateThread(function()
     while true do
@@ -9,7 +10,7 @@ Citizen.CreateThread(function()
         player = PlayerId()
         ped = PlayerPedId()
         isInvincible = GetPlayerInvincible(player)
-        isInVeh = IsPedInAnyVehicle(ped, false)
+        currentVehicle = IsPedInAnyVehicle(ped, false)
         Citizen.Wait(500)
     end
 end)
@@ -21,13 +22,13 @@ Citizen.CreateThread(function()
             DrawLabel("~r~You are currently in godmode which is ~h~prohibited~h~ on this server, disable it now.")
             FreezeEntityPosition(ped, true)
             DisablePlayerFiring(player, true) -- true/false - doesn't seem to do anything different, still disables every frame
-            if isInVeh then
-                FreezeEntityPosition(GetVehiclePedIsIn(ped, false), true)
+            if currentVehicle > 0 then
+                FreezeEntityPosition(currentVehicle, true)
             end
         else
             FreezeEntityPosition(ped, false)
-            if isInVeh then
-                FreezeEntityPosition(GetVehiclePedIsIn(ped, false), false)
+            if currentVehicle > 0 then
+                FreezeEntityPosition(currentVehicle, false)
             end 
         end
         
